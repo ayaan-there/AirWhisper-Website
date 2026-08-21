@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-cream: #fafaf9;
+  --color-ink: #0a0a0a;
+  --color-ink-soft: #1a1a1a;
+  --color-sky: #5BA4D9;
+  --color-sky-deep: #3D8BC4;
+  --color-sky-soft: #A8D0EE;
+  --color-sky-tint: #E8F3FA;
+  --color-mist: #e8ebe8;
+  --color-night: #0d0d0d;
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-script: var(--font-script);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-sky);
+}
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
