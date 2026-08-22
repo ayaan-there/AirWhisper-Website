@@ -28,32 +28,9 @@ export function Hero() {
                 sound.
               </p>
 
-              <div className="flex flex-wrap gap-4 mb-12">
+              <div className="flex flex-wrap gap-4">
                 <Button variant="primary">Get early access</Button>
                 <Button variant="secondary">Learn more</Button>
-              </div>
-
-              <div className="flex items-center gap-4 pt-8 border-t border-gray-200">
-                <div className="flex -space-x-2">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div
-                      key={i}
-                      className="h-10 w-10 rounded-full border-2 border-white bg-gray-200"
-                      style={{
-                        backgroundImage: `url(https://picsum.photos/seed/caregiver${i}/80/80)`,
-                        backgroundSize: "cover",
-                      }}
-                    />
-                  ))}
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-[#0a0a0a]">
-                    Trusted by 2,400+ families
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    Across 38 care centers worldwide
-                  </p>
-                </div>
               </div>
             </motion.div>
           </div>
