@@ -40,7 +40,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="how" className="py-20 lg:py-32 bg-gray-50">
+    <section id="how" className="py-20 lg:py-32 bg-gray-50/70">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center mb-16">
           <p className="text-sm font-semibold text-[#5BA4D9] uppercase tracking-wide mb-4">
