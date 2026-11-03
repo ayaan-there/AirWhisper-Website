@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#eff0e9" />
+  <title>AirWhisper — DAMN Club / Our Story</title>
+  <style>
+    :root {
+      --paper: #eff0e9;
+      --paper-deep: #e6e9e1;
+      --ink: #090b0c;
+      --muted: #697276;
+      --blue: #5a9bff;
+      --blue-deep: #246bdb;
+      --rule: rgba(9, 11, 12, .18);
+      --pad: clamp(22px, 5.1vw, 82px);
+      --ease: cubic-bezier(.2,.75,.18,1);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    .aw-about { position: relative; overflow: clip; isolation: isolate; background: var(--paper); }
+    .aw-grain {
+      position: absolute; inset: 0; z-index: 5; pointer-events: none; opacity: .12;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.15'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+    .aw-grid-bg {
+      position: absolute; inset: 0; z-index: -2; pointer-events: none; opacity: .42;
+      background-image: linear-gradient(rgba(9,11,12,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(9,11,12,.045) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
+    }
+    .aw-spotlight {
+      position: absolute; z-index: -1; inset: 0; pointer-events: none;
+      background: radial-gradient(520px circle at var(--mx, 76%) var(--my, 22%), rgba(94,157,255,.13), transparent 68%);
+      opacity: .85; transition: opacity .4s ease;
+    }
+    .aw-wrap { width: min(100%, 1660px); margin-inline: auto; padding-inline: var(--pad); }
+    .aw-top {
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+      min-height: 74px; border-bottom: 1px solid var(--rule);
+      color: #566064; text-transform: uppercase; letter-spacing: .13em;
+      font: 650 10px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+      position: relative; z-index: 7;
+    }
+    .aw-brand { color: var(--ink); letter-spacing: -.045em; font: italic 700 19px/1 Georgia, serif; text-transform: none; }
+    .aw-brand span { color: var(--blue-deep); font: 650 18px/1 Inter, sans-serif; }
+    .aw-top-right { display: flex; align-items: center; gap: clamp(14px, 3vw, 42px); }
+    .aw-status { display: inline-flex; align-items: center; gap: 9px; }
+    .aw-status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--blue-deep); box-shadow: 0 0 0 4px rgba(90,155,255,.15); animation: statusPulse 2s ease-in-out infinite; }
+
+    .aw-hero { min-height: min(850px, calc(100svh - 74px)); display: flex; flex-direction: column; justify-content: center; padding-block: clamp(58px, 9vh, 118px) 46px; position: relative; }
+    .aw-overline { display: flex; align-items: center; gap: 12px; margin: 0 0 clamp(22px, 4vh, 48px); color: #606a6e; text-transform: uppercase; letter-spacing: .16em; font: 700 10px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; opacity: 0; animation: riseIn .8s .1s var(--ease) forwards; }
+    .aw-overline::before { content: ""; width: 32px; height: 2px; background: var(--blue-deep); transform-origin: left; animation: ruleGrow .8s .3s var(--ease) both; }
+    .aw-headline { margin: 0; max-width: 1120px; font-size: clamp(34px, 5vw, 72px); line-height: .94; letter-spacing: -.075em; font-weight: 750; }
+    .aw-headline .line { display: block; overflow: hidden; padding: .06em 0 .12em; }
+    .aw-headline .line > span { display: block; transform: translateY(115%); animation: textRise 1s var(--ease) forwards; }
+    .aw-headline .line:nth-child(2) > span { animation-delay: .12s; }
+    .aw-headline em { color: var(--blue-deep); font-style: normal; }
+
+    .aw-wordstage { position: relative; margin: clamp(45px, 8vh, 95px) 0 0; padding: 0 0 25px; }
+    .aw-wordstage::before { content: ""; position: absolute; left: -8vw; right: -8vw; top: 49%; height: 1px; background: linear-gradient(90deg, transparent, rgba(9,11,12,.2) 12%, rgba(9,11,12,.2) 88%, transparent); }
+    .aw-wordstage::after { content: ""; position: absolute; inset: -8% 8% 0; z-index: -1; background: radial-gradient(ellipse at 52% 55%, rgba(255,255,255,.64), transparent 64%); }
+    .aw-monogram {
+      position: relative; display: flex; align-items: center; justify-content: space-between;
+      width: 100%; font-size: clamp(112px, 22vw, 340px); font-weight: 900; line-height: .72;
+      letter-spacing: -.105em; perspective: 1000px; isolation: isolate;
+    }
+    .aw-letter {
+      position: relative; display: inline-block; min-width: .72em; text-align: center;
+      transform: translateY(90px) rotateX(-48deg) scale(.88); opacity: 0;
+      transform-origin: 50% 70%; animation: letterLand 1.25s var(--ease) forwards;
+      will-change: transform, opacity; cursor: default; outline: none;
+      transition: color .35s ease, text-shadow .35s ease;
+    }
+    .aw-letter:nth-child(1) { animation-delay: .18s; }
+    .aw-letter:nth-child(2) { animation-delay: .3s; }
+    .aw-letter:nth-child(3) { animation-delay: .42s; }
+    .aw-letter:nth-child(4) { animation-delay: .54s; color: var(--blue-deep); }
+    .aw-letter::after {
+      content: attr(data-name); position: absolute; left: 50%; top: calc(100% + 25px);
+      transform: translate(-50%, 10px); color: #5d676b; opacity: 0;
+      font: 700 clamp(9px, .85vw, 12px)/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .2em; text-transform: uppercase; white-space: nowrap;
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    .aw-letter:hover, .aw-letter:focus-visible { color: var(--blue-deep); text-shadow: 0 10px 45px rgba(36,107,219,.18); }
+    .aw-letter:hover::after, .aw-letter:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+    .aw-letter:focus-visible { outline: 1px solid var(--blue-deep); outline-offset: 12px; }
+
+    .aw-orbit { position: absolute; width: 108%; height: 145%; left: -4%; top: -20%; overflow: visible; pointer-events: none; }
+    .aw-orbit .orbit-base { fill: none; stroke: rgba(36,107,219,.2); stroke-width: 1; stroke-dasharray: 2 10; }
+    .aw-orbit .orbit-trace { fill: none; stroke: var(--blue); stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: traceIn 2.5s 1.1s ease forwards; filter: drop-shadow(0 0 5px rgba(90,155,255,.6)); }
+    .aw-orbit .orbit-dot { fill: var(--blue-deep); filter: drop-shadow(0 0 8px rgba(36,107,219,.75)); }
+    .aw-orbit .orbit-dot.soft { fill: #9fc5ff; }
+    .aw-signal-label { position: absolute; right: 0; top: -22%; display: flex; align-items: center; gap: 9px; color: #687175; font: 650 9px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .13em; text-transform: uppercase; }
+    .aw-signal-label::before { content: ""; width: 7px; height: 7px; border: 1px solid var(--blue-deep); border-radius: 50%; box-shadow: 0 0 0 4px rgba(90,155,255,.1); }
+
+    .aw-word-meta { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-top: clamp(45px, 7vw, 82px); position: relative; }
+    .aw-club { font: 750 clamp(20px, 2.7vw, 36px)/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .26em; }
+    .aw-club small { display: block; margin-top: 12px; color: #687175; font: 600 9px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .16em; }
+    .aw-manifesto { max-width: 440px; margin: 0; color: #535e62; font-size: clamp(13px, 1.15vw, 16px); line-height: 1.6; text-align: right; }
+    .aw-manifesto strong { color: var(--ink); font-weight: 750; }
+    .aw-scroll-cue { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; color: #747e81; font: 600 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+    .aw-scroll-cue i { display: block; width: 1px; height: 27px; background: var(--blue-deep); transform-origin: top; animation: cueDrop 1.8s ease-in-out infinite; }
+
+    .aw-story { position: relative; padding: clamp(70px, 9vw, 130px) 0 clamp(82px, 10vw, 150px); border-top: 1px solid var(--rule); }
+    .aw-story-head { display: grid; grid-template-columns: 1fr minmax(240px, .75fr); gap: 40px; align-items: end; margin-bottom: clamp(42px, 7vw, 90px); }
+    .aw-section-label { margin: 0 0 20px; color: var(--blue-deep); font: 700 10px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .17em; text-transform: uppercase; }
+    .aw-story-title { max-width: 800px; margin: 0; font-size: clamp(42px, 7.2vw, 106px); line-height: .88; font-weight: 800; letter-spacing: -.085em; }
+    .aw-story-title span { color: var(--blue-deep); }
+    .aw-story-intro { max-width: 390px; margin: 0 0 5px auto; color: #606b6e; font-size: 15px; line-height: 1.7; }
+
+    .aw-timeline { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--rule); }
+    .aw-timeline::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 2px; transform: scaleX(var(--story-progress, 0)); transform-origin: left; background: var(--blue-deep); box-shadow: 0 0 18px rgba(36,107,219,.35); }
+    .aw-phase { position: relative; min-height: 270px; padding: 22px 22px 0 0; border-right: 1px solid var(--rule); opacity: .22; transform: translateY(28px); transition: opacity .8s ease, transform .8s var(--ease); }
+    .aw-phase + .aw-phase { padding-left: 22px; }
+    .aw-phase:last-child { border-right: 0; }
+    .aw-phase.is-in { opacity: 1; transform: translateY(0); }
+    .aw-phase::before { content: ""; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--paper); border: 1.5px solid var(--blue-deep); box-shadow: 0 0 0 5px var(--paper); }
+    .aw-phase + .aw-phase::before { left: 22px; }
+    .aw-phase-index { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #6d777a; font: 650 10px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; }
+    .aw-phase-index b { color: var(--blue-deep); font-weight: 700; }
+    .aw-phase-mark { display: block; margin: 34px 0 26px; color: rgba(9,11,12,.09); font-size: clamp(70px, 9vw, 130px); line-height: .72; font-weight: 900; letter-spacing: -.1em; transition: color .4s ease, transform .6s var(--ease); }
+    .aw-phase:hover .aw-phase-mark { color: rgba(36,107,219,.2); transform: translateY(-7px); }
+    .aw-phase h3 { margin: 0 0 12px; font-size: clamp(19px, 2.1vw, 28px); line-height: 1; letter-spacing: -.055em; }
+    .aw-phase p { max-width: 250px; margin: 0; color: #616c70; font-size: 13px; line-height: 1.65; }
+
+    .aw-closing { padding: clamp(48px, 7vw, 95px) 0 34px; border-top: 1px solid var(--rule); display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; }
+    .aw-closing h2 { max-width: 980px; margin: 0; font-size: clamp(40px, 7.5vw, 112px); line-height: .86; font-weight: 850; letter-spacing: -.09em; }
+    .aw-closing h2 em { color: var(--blue-deep); font-style: normal; }
+    .aw-colophon { flex: 0 0 auto; color: #697377; font: 650 9px/1.8 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; text-transform: uppercase; text-align: right; }
+    .aw-colophon strong { color: var(--ink); }
+    .aw-footerline { display: flex; justify-content: space-between; gap: 20px; padding: 17px 0 22px; border-top: 1px solid var(--rule); color: #7a8386; font: 600 9px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; }
+
+    @keyframes riseIn { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(12px); } }
+    @keyframes textRise { to { transform: translateY(0); } }
+    @keyframes letterLand { 0% { opacity: 0; transform: translateY(90px) rotateX(-48deg) scale(.88); filter: blur(10px); } 65% { opacity: 1; transform: translateY(-10px) rotateX(8deg) scale(1.025); filter: blur(0); } 100% { opacity: 1; transform: translateY(0) rotateX(0) scale(1); filter: blur(0); } }
+    @keyframes traceIn { to { stroke-dashoffset: 0; } }
+    @keyframes cueDrop { 0%, 100% { transform: scaleY(.55); opacity: .45; } 50% { transform: scaleY(1); opacity: 1; } }
+    @keyframes statusPulse { 0%,100% { box-shadow: 0 0 0 3px rgba(90,155,255,.12); } 50% { box-shadow: 0 0 0 7px rgba(90,155,255,0); } }
+    @keyframes drift { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(0,-9px,0); } }
+
+    @media (max-width: 800px) {
+      .aw-hero { min-height: auto; padding-block: 76px 84px; }
+      .aw-story-head { grid-template-columns: 1fr; gap: 23px; }
+      .aw-story-intro { margin: 0; }
+      .aw-timeline { grid-template-columns: repeat(2, 1fr); row-gap: 34px; }
+      .aw-phase { min-height: 240px; }
+      .aw-phase:nth-child(2) { border-right: 0; }
+      .aw-phase:nth-child(3) { border-top: 1px solid var(--rule); padding-top: 22px; }
+      .aw-phase:nth-child(4) { border-top: 1px solid var(--rule); padding-top: 22px; }
+      .aw-phase:nth-child(3)::before, .aw-phase:nth-child(4)::before { top: -5px; }
+      .aw-phase:nth-child(3) { padding-left: 0; }
+      .aw-phase:nth-child(4) { padding-left: 22px; }
+      .aw-phase:nth-child(4)::before { left: 22px; }
+      .aw-closing { display: block; }
+      .aw-colophon { margin-top: 27px; text-align: left; }
+    }
+    @media (max-width: 560px) {
+      .aw-top { min-height: 62px; font-size: 8px; letter-spacing: .07em; }
+      .aw-top-right span:last-child { display: none; }
+      .aw-brand { font-size: 17px; }
+      .aw-hero { padding-block: 66px 84px; }
+      .aw-headline { font-size: clamp(38px, 10vw, 58px); }
+      .aw-wordstage { margin-top: 64px; }
+      .aw-monogram { font-size: 22vw; letter-spacing: -.1em; }
+      .aw-letter::after { top: calc(100% + 17px); font-size: 8px; letter-spacing: .12em; }
+      .aw-orbit { width: 118%; left: -9%; height: 130%; top: -13%; }
+      .aw-signal-label { top: -32%; font-size: 8px; }
+      .aw-word-meta { margin-top: 52px; display: block; }
+      .aw-manifesto { margin-top: 18px; max-width: 370px; text-align: left; }
+      .aw-scroll-cue { bottom: 14px; }
+      .aw-story { padding-block: 72px 82px; }
+      .aw-timeline { column-gap: 0; }
+      .aw-phase { padding-right: 13px; min-height: 255px; }
+      .aw-phase + .aw-phase { padding-left: 14px; }
+      .aw-phase:nth-child(3) { padding-left: 0; }
+      .aw-phase:nth-child(4) { padding-left: 14px; }
+      .aw-phase:nth-child(4)::before { left: 14px; }
+      .aw-phase-mark { font-size: 75px; margin: 30px 0 23px; }
+      .aw-phase h3 { font-size: 19px; }
+      .aw-phase p { font-size: 12px; }
+      .aw-footerline { font-size: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .001ms !important; }
+      .aw-letter, .aw-headline .line > span, .aw-overline { opacity: 1; transform: none; filter: none; }
+      .aw-phase { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="aw-about" id="airwhisper-about">
+    <div class="aw-grid-bg" aria-hidden="true"></div>
+    <div class="aw-spotlight" aria-hidden="true"></div>
+    <div class="aw-grain" aria-hidden="true"></div>
+
+    <div class="aw-wrap">
+      <header class="aw-top">
+        <div class="aw-brand">Air<span>Whisper</span></div>
+        <div class="aw-top-right">
+          <span class="aw-status">A year in motion</span>
+          <span>About the makers / 2026</span>
+        </div>
+      </header>
+
+      <section class="aw-hero" aria-labelledby="aw-main-title">
+        <p class="aw-overline">An independent project by four minds</p>
+        <h1 class="aw-headline" id="aw-main-title">
+          <span class="line"><span>One year. Countless iterations.</span></span>
+          <span class="line"><span>One belief: <em>everyone deserves to be heard.</em></span></span>
+        </h1>
+
+        <div class="aw-wordstage">
+          <div class="aw-signal-label">A signal becomes a voice</div>
+          <svg class="aw-orbit" viewBox="0 0 1200 360" preserveAspectRatio="none" aria-hidden="true">
+            <path class="orbit-base" d="M20 195 C180 20 310 345 470 180 S760 20 900 170 S1080 300 1180 90" />
+            <path class="orbit-trace" pathLength="1" d="M20 195 C180 20 310 345 470 180 S760 20 900 170 S1080 300 1180 90" />
+            <circle class="orbit-dot" r="5"><animateMotion dur="6.5s" repeatCount="indefinite" path="M20 195 C180 20 310 345 470 180 S760 20 900 170 S1080 300 1180 90" /></circle>
+            <circle class="orbit-dot soft" r="2.5"><animateMotion dur="6.5s" begin="-3.1s" repeatCount="indefinite" path="M20 195 C180 20 310 345 470 180 S760 20 900 170 S1080 300 1180 90" /></circle>
+          </svg>
+          <div class="aw-monogram" aria-label="DAMN Club">
+            <span class="aw-letter" data-name="Dhruv" tabindex="0">D</span>
+            <span class="aw-letter" data-name="Ayaan" tabindex="0">A</span>
+            <span class="aw-letter" data-name="Manvi" tabindex="0">M</span>
+            <span class="aw-letter" data-name="Nirali" tabindex="0">N</span>
+          </div>
+          <div class="aw-word-meta">
+            <div class="aw-club">DAMN CLUB<small>DHRUV&nbsp; /&nbsp; AYAAN&nbsp; /&nbsp; MANVI&nbsp; /&nbsp; NIRALI</small></div>
+            <p class="aw-manifesto">We didn't set out to build another app. We set out to explore how <strong>a movement of the hand could become a message</strong> — privately, naturally, and from the wrist.</p>
+          </div>
+        </div>
+        <div class="aw-scroll-cue"><i></i> Scroll to follow the signal</div>
+      </section>
+
+      <section class="aw-story" aria-labelledby="aw-story-heading">
+        <div class="aw-story-head">
+          <div>
+            <p class="aw-section-label">01 — The making of AirWhisper</p>
+            <h2 class="aw-story-title" id="aw-story-heading">Not a straight line.<br><span>A year of becoming.</span></h2>
+          </div>
+          <p class="aw-story-intro">A question became a prototype. A missing dataset became something we made ourselves. Wrist movement became a language we could begin to recognise. Every iteration brought us closer to the reason we started.</p>
+        </div>
+
+        <div class="aw-timeline" id="aw-timeline">
+          <article class="aw-phase">
+            <div class="aw-phase-index"><b>01 / THE QUESTION</b><span>BEGIN</span></div>
+            <span class="aw-phase-mark" aria-hidden="true">?</span>
+            <h3>Start with a person.</h3>
+            <p>We began by thinking about the moments when someone has something to say, but speech is not available to them.</p>
+          </article>
+          <article class="aw-phase">
+            <div class="aw-phase-index"><b>02 / THE DATA</b><span>CREATE</span></div>
+            <span class="aw-phase-mark" aria-hidden="true">01</span>
+            <h3>Build what is missing.</h3>
+            <p>There was no ready-made dataset for the gestures we wanted to recognise. So we worked to collect and shape our own.</p>
+          </article>
+          <article class="aw-phase">
+            <div class="aw-phase-index"><b>03 / THE MOTION</b><span>REFINE</span></div>
+            <span class="aw-phase-mark" aria-hidden="true">〰</span>
+            <h3>Make movement matter.</h3>
+            <p>We explored wrist motion, signal processing and on-device machine learning, learning from every imperfect attempt.</p>
+          </article>
+          <article class="aw-phase">
+            <div class="aw-phase-index"><b>04 / THE WHY</b><span>KEEP GOING</span></div>
+            <span class="aw-phase-mark" aria-hidden="true">∞</span>
+            <h3>Give words another way.</h3>
+            <p>AirWhisper is our step toward communication that feels more immediate, personal and independent.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="aw-closing" aria-label="Our belief">
+        <h2>Not built to speak <em>for</em> someone.<br>Built to help them speak.</h2>
+        <div class="aw-colophon"><strong>DAMN CLUB</strong><br>Dhruv · Ayaan · Manvi · Nirali<br>AirWhisper / One year in motion</div>
+      </section>
+      <footer class="aw-footerline"><span>AirWhisper / Our story</span><span>Designed with purpose, built together.</span><span>End of chapter 01</span></footer>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const root = document.querySelector('.aw-about');
+      const timeline = document.querySelector('.aw-timeline');
+      const phases = [...document.querySelectorAll('.aw-phase')];
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Subtle cursor-following light; disabled for touch and reduced-motion users.
+      if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+        root.addEventListener('pointermove', (event) => {
+          const rect = root.getBoundingClientRect();
+          root.style.setProperty('--mx', `${event.clientX - rect.left}px`);
+          root.style.setProperty('--my', `${event.clientY - rect.top}px`);
+        }, { passive: true });
+      }
+
+      // Reveal the four chapters and draw the signal line as the story enters view.
+      if ('IntersectionObserver' in window && !reduceMotion) {
+        const phaseObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const index = phases.indexOf(entry.target);
+              entry.target.style.transitionDelay = `${index * 120}ms`;
+              entry.target.classList.add('is-in');
+              phaseObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.22 });
+        phases.forEach((phase) => phaseObserver.observe(phase));
+
+        const lineObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              timeline.style.setProperty('--story-progress', '1');
+              lineObserver.disconnect();
+            }
+          });
+        }, { threshold: 0.35 });
+        lineObserver.observe(timeline);
+      } else {
+        phases.forEach((phase) => phase.classList.add('is-in'));
+        timeline.style.setProperty('--story-progress', '1');
+      }
+
+      // Keyboard focus on letters mirrors the hover name reveal.
+      document.querySelectorAll('.aw-letter').forEach((letter) => {
+        letter.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            letter.classList.toggle('is-named');
+            letter.focus();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
