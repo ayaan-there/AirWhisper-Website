@@ -77,10 +77,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
       { url: "/app-icon.png", type: "image/png", sizes: "1024x1024" },
     ],
-    apple: "/app-icon.png",
+    apple: "/apple-touch-icon.png",
   },
   alternates: {
     canonical: siteUrl,
