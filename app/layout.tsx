@@ -20,7 +20,7 @@ const siteUrl = "https://airwhisper.in";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "AirWhisper — Your words. Your way.",
+    default: "AirWhisper",
     template: "%s — AirWhisper",
   },
   description:
