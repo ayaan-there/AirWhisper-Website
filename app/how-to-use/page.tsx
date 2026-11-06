@@ -83,7 +83,7 @@ const QUICK_PHRASES_STEPS = [
   "Tap “Manage Quick Phrases.”",
   "Type a phrase in the text field and tap Add. The phrase appears in the list immediately.",
   "Add up to 10 phrases — when the list is full, the least-used phrase is automatically replaced, with an alert.",
-  "Phrases sync to your Apple Watch over Bluetooth and back up to iCloud.",
+  "Phrases sync to your Apple Watch over Bluetooth. iCloud sync depends on your sign-in method.",
 ];
 
 const TROUBLESHOOTING = [
@@ -111,6 +111,47 @@ const TROUBLESHOOTING = [
     symptom: "SMS fails to send",
     cause: "iPhone disconnected, or number format is invalid",
     remedy: "Ensure cellular data / Wi-Fi is on, and contacts have international codes (+ prefix).",
+  },
+];
+
+const CAREGIVER_GUIDE = [
+  {
+    title: "Before a communication session",
+    steps: [
+      "Check that the Watch is charged and fits comfortably.",
+      "Open AirWhisper on the Watch and make sure it reaches Quick Speak.",
+      "If the person plans to send an SMS, check internet access and make sure AirWhisper has been opened and synchronized on the iPhone.",
+      "Check that the intended interaction method is available. Tap Detector must be off for AirWrite and OrientWrite to appear on Quick Speak.",
+      "Make sure the person knows how to return to the communication screen or ask for help.",
+    ],
+  },
+  {
+    title: "Help the person practise",
+    steps: [
+      "Start with familiar Quick Speak phrases such as Yes, No, and Help.",
+      "Give the person time to select a phrase and choose an action.",
+      "When they are comfortable, practise a short message with AirWrite or OrientWrite.",
+      "Practise Surface Tap calibration and navigation if they plan to use it.",
+      "Try AssistiveTouch gestures if hand-gesture navigation is preferred.",
+      "Use the method the person finds most comfortable and dependable.",
+    ],
+  },
+  {
+    title: "During communication",
+    steps: [
+      "Allow enough time to select or compose a message. Do not assume what the person intends to say before they finish.",
+      "If a letter is missed, allow them to try again or use another available method.",
+      "Listen carefully when Speak Aloud is used.",
+      "Check that the intended contact is selected, and wait for the Message Sent confirmation before assuming an SMS was sent.",
+    ],
+  },
+  {
+    title: "After communication",
+    steps: [
+      "Use Message History on the iPhone to review messages successfully sent from the Watch.",
+      "Keep the iPhone and Watch nearby when synchronization is needed.",
+      "Review settings if the person reports that the cursor, spoken guidance, or tap navigation is uncomfortable.",
+    ],
   },
 ];
 
@@ -222,7 +263,10 @@ export default function HowToUse() {
                 <p className="body mt-4 max-w-[56ch] text-[var(--muted)]">
                   “HELP” is always pinned at the top. Once you use a phrase, it
                   automatically promotes for faster access next time. Up to 10
-                  phrases, synced over Bluetooth and backed up to iCloud.
+                  phrases sync to the Watch over Bluetooth. With Sign in with
+                  Apple, supported data can also sync through iCloud across
+                  devices using the same Apple ID. Google and email sign-in keep
+                  data on this device in this build.
                 </p>
 
                 <ol className="mt-8 space-y-4 border-t border-[var(--line)] pt-6">
@@ -256,10 +300,10 @@ export default function HowToUse() {
                 <h2 className="h3 max-w-[24ch] text-white">Say it, send it, save it.</h2>
                 <p className="mt-4 max-w-[56ch] text-[1rem] leading-relaxed text-white/90">
                   Once text is composed — or selected from Quick Speak — the
-                  Action Required screen gives you three choices:
+                  Actions screen gives you four choices:
                 </p>
 
-                <div className="mt-8 grid grid-cols-1 gap-px bg-white/30 sm:grid-cols-3">
+                <div className="mt-8 grid grid-cols-1 gap-px bg-white/30 sm:grid-cols-2 lg:grid-cols-4">
                   {[
                     {
                       t: "Speak Aloud",
@@ -272,6 +316,10 @@ export default function HowToUse() {
                     {
                       t: "Save as Phrase",
                       d: "Adds the composed text directly to Quick Speak. Up to 10 phrases — the least-used phrase is automatically replaced when full.",
+                    },
+                    {
+                      t: "Cancel",
+                      d: "Returns to the previous screen without speaking, sending, or saving.",
                     },
                   ].map((a) => (
                     <div key={a.t} className="flex flex-col gap-3 bg-[#5ba5f7] p-5 sm:p-6">
@@ -374,48 +422,57 @@ export default function HowToUse() {
           </div>
         </section>
 
+        {/* CAREGIVER GUIDE */}
+        <section className="section-pad border-t border-[var(--line)]">
+          <div className="shell">
+            <div className="grid12 gap-y-10">
+              <div className="col-span-12">
+                <p className="mono text-[var(--accent-deep)]">
+                  08 / Caregiver Guide
+                </p>
+                <h2 className="h4 mt-4">Using AirWhisper together.</h2>
+                <p className="body mt-3 max-w-[56ch]">
+                  Practical ways to support someone who is learning AirWhisper.
+                  These are usage suggestions, not additional app features.
+                </p>
+                <div className="mt-8 grid gap-8 sm:grid-cols-2">
+                  {CAREGIVER_GUIDE.map((group) => (
+                    <section key={group.title} className="border-t border-[var(--line)] pt-5">
+                      <h3 className="font-semibold leading-snug">{group.title}</h3>
+                      <ul className="body mt-4 ml-5 list-disc space-y-3 text-[0.9375rem]">
+                        {group.steps.map((step) => (
+                          <li key={step} className="leading-relaxed">{step}</li>
+                        ))}
+                      </ul>
+                    </section>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* DOWNLOADS */}
         <section className="section-pad border-t border-[var(--line)]">
           <div className="shell">
             <div className="grid12 gap-y-10">
               <div className="col-span-12 lg:col-span-7">
                 <p className="mono text-[var(--accent-deep)]">
-                  08 / Downloads
+                  09 / Downloads
                 </p>
                 <h2 className="h4 mt-4">The full guide, offline.</h2>
                 <p className="body mt-3 max-w-[52ch]">
-                  The complete AirWhisper guide — clinical context, the Apple
-                  Watch setup, feature-by-feature how-tos, and troubleshooting.
-                  Available to read offline or print to PDF.
+                  Download a printable PDF with the Watch feature walkthroughs,
+                  iPhone companion overview, troubleshooting, and caregiver
+                  guidance from this page.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <a
-                    href="/content/how-to-use/AirWhisper_Complete_Guide.html"
+                    href="/content/how-to-use/AirWhisper_Guide.pdf"
                     download
                     className="btn btn-ink"
                   >
-                    Guide (.html / Save as PDF)
-                  </a>
-                  <a
-                    href="/content/how-to-use/AirWhisper_Complete_Guide.md"
-                    download
-                    className="btn btn-outline"
-                  >
-                    Guide (.md)
-                  </a>
-                  <a
-                    href="/content/how-to-use/AirWhisper_Complete_Guide.docx"
-                    download
-                    className="btn btn-outline"
-                  >
-                    Guide (.docx)
-                  </a>
-                  <a
-                    href="/content/how-to-use/AirWhisper_Keynote.pdf"
-                    download
-                    className="btn btn-outline"
-                  >
-                    Keynote (.pdf)
+                    Download the PDF guide
                   </a>
                 </div>
               </div>
@@ -423,11 +480,10 @@ export default function HowToUse() {
               <div className="col-span-12 lg:col-span-4 lg:col-start-9">
                 <p className="mono text-[var(--muted)]">On this page</p>
                 <ul className="mt-4 space-y-2 text-[0.9375rem] leading-relaxed text-[var(--muted)]">
-                  <li>Patient demonstration video (Target Conditions)</li>
-                  <li>Apple Watch setup — AssistiveTouch, Wrist Detection, Wake Duration</li>
-                  <li>AirWrite, OrientWrite, Surface Tap and Quick Speak app tutorials in the watch frame</li>
-                  <li>Swipeable AirWrite / OrientWrite / Surface Tap deep-dive with videos</li>
-                  <li>iPhone companion app and troubleshooting</li>
+                  <li>Apple Watch settings and Quick Speak</li>
+                  <li>AirWrite, OrientWrite, Surface Tap, and message actions</li>
+                  <li>A–Z stroke practice and iPhone companion overview</li>
+                  <li>Troubleshooting and caregiver guidance</li>
                 </ul>
               </div>
             </div>
